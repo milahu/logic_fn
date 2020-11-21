@@ -17,7 +17,7 @@ otherwise you risk arbitrary code execution
 in your node.js project
 
 ```sh
-npm install https://github.com/milahu/logic_fn.git
+npm install https://github.com/milahu/logic_fn
 ```
 
 ## use
