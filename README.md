@@ -5,7 +5,7 @@ parse custom logic expression into javascript eval function
 use case: test complex boolean expressions  
 for example: filter a search result by tags
 
-minified size: 676 bytes in [dist/logic_fn.min.esm.js](dist/logic_fn.min.esm.js)  
+minified size: 660 bytes in [dist/logic_fn.min.esm.js](dist/logic_fn.min.esm.js)  
 4 times smaller than [logical-expression-parser](https://github.com/NimitzDEV/logical-expression-parser) with [2.3 kiloByte](https://bundlephobia.com/result?p=logical-expression-parser) minified bundle size
 
 warning: do not use in critical server code  
@@ -42,6 +42,53 @@ if (b === true) {
 ```
 
 see [test/test.js](test/test.js) for more samples
+
+## data types
+
+different data types need different get functions  
+these are configured with a prefix- and suffix-string:  
+`{ get: ['getter_prefix', 'getter_suffix'] }`
+
+```js
+// default config
+// input type: object
+var f = logic_fn('a', { get: ['i[', ']'] });
+var i = { 'a': 1 };
+var r = f(i); // r === 1
+// logic operators internally convert to boolean
+// but the result value is taken from the input
+// if you need a boolean result, use
+var r = Boolean(f(i)); // r === true
+
+// to use other data types, change the 'get' option
+
+// convert every literal to boolean (slow)
+var f = logic_fn('a', { get: ['Boolean(i[', '])'] });
+var i = { 'a': 1 };
+var r = f(i); // r === true
+
+// input type: object
+// values can be false, only check if property is set
+var f = logic_fn('a', { get: ['i.hasOwnProperty(', ')'] });
+var i = { 'a': false };
+var r = f(i); // r === true
+
+// input type: set, map
+var f = logic_fn('a', { get: ['i.has(', ')'] });
+var i = new Set(['a']);
+var r = f(i); // r === true
+
+// input type: array, string
+var f = logic_fn('a', { get: ['i.includes(', ')'] });
+var i = ['a'];
+var r = f(i); // r === true
+
+// input type: custom object
+// the literal value 'a' is passed to the function (l => i[l] == "yes")
+var f = logic_fn('a', { get: ['(l => i[l] == "yes")(', ')'] });
+var i = { a: 'yes' };
+var r = f(i); // r === true
+```
 
 ## license
 

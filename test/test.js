@@ -76,15 +76,18 @@ tf('a(())', {}, {'a': 1}, true); // empty parenthesis
 
 
 // data type: object -> boolean(value) (explicit)
-tf('a&b&!c', {convert: ['i[', ']']}, { a: 1, b: 1 }, true);
+tf('a&b&!c', {get: ['i[', ']']}, { a: 1, b: 1 }, true);
 
 // data type: object -> has key?
-tf('a&b&!c', {convert: ['i.hasOwnProperty(', ')']}, { a: 0, b: false }, true);
+tf('a&b&!c', {get: ['i.hasOwnProperty(', ')']}, { a: 0, b: false }, true);
 
 // data type: set/map -> has value?
-tf('a&b&!c', {convert: ['i.has(', ')']}, new Set(['a', 'b']), true);
-tf('a&b&!c', {convert: ['i.has(', ')']}, new Map([['a', 0], ['b', false]]), true);
+tf('a&b&!c', {get: ['i.has(', ')']}, new Set(['a', 'b']), true);
+tf('a&b&!c', {get: ['i.has(', ')']}, new Map([['a', 0], ['b', false]]), true);
 
 // data type: array/string -> has value/substring?
-tf('a&b&!c', {convert: ['i.includes(', ')']}, ['a', 'b'], true);
-tf('a&b&!c', {convert: ['i.includes(', ')']}, "abde", true);
+tf('a&b&!c', {get: ['i.includes(', ')']}, ['a', 'b'], true);
+tf('a&b&!c', {get: ['i.includes(', ')']}, "abde", true);
+
+// data type: custom object
+tf('a&b&!c', {get: ['(l => i[l] == "yes")(', ')']}, { a: 'yes', b: 'yes', c: 'no'}, true);

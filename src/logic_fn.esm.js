@@ -1,7 +1,7 @@
 // logic_fn.js
 // parse custom logic expression into javascript eval function
 
-// license: CC0-1.0, author: milahu, minified size: 567 bytes
+// license: CC0-1.0, author: milahu, minified size: 660 bytes
 // 4 times smaller than https://github.com/NimitzDEV/logical-expression-parser
 // usage: see test.js
 
@@ -11,21 +11,21 @@
 
 // TODO support nested input objects
 // var f = logic_fn('a.a'); f({ a: { a: 1 } })
-// for now, the literal a.a is always converted to i["a.a"]
-// so the input must be { "a.a": 1 }
+// for now, the literal a.a is always geted to "a.a"
 
-// TODO support other input types than object, like: array, set, map
-// currently, expression-literals are mapped to object-properties via i['literal']
-// sample: expression a&b, input object { a: 1, b: 0 }
-// alternative: i.hasOwnProperty('literal') to eval all values to true
-// goal: avoid conversion from existing data types
+// TODO allow to configure an object/map/table
+// of getter functions, for different literal values
+// including a default/fallback getter function
+
+// TODO support compare-operators: 0 < a, a < 10
 
 // boolean options: space_is_and (default), space_is_or, return_expr
-// option convert: how to convert literal to boolean result. samples:
-//   ['i[', ']']                 // object -> boolean(value) (default)
-//   ['i.hasOwnProperty(', ')']  // object -> has key?
-//   ['i.has(', ')']             // set/map -> has value?
-//   ['i.includes(', ')']        // array/string -> has value/substring?
+// option get: how to convert literal to boolean result. samples:
+//   ['i[', ']']                    // object -> boolean(value) (default)
+//   ['i.hasOwnProperty(', ')']     // object -> has key?
+//   ['i.has(', ')']                // set/map -> has value?
+//   ['i.includes(', ')']           // array/string -> has value/substring?
+//   ['(l => i.includes(l))(', ')'] // custom type -> IIFE result
 //   the input variable is always 'i'
 export function logic_fn(e, o) {
 
@@ -50,11 +50,11 @@ export function logic_fn(e, o) {
     return om[o];
   }
 
-  if (!o.convert) o.convert = ['i[', ']']; // i = input object
+  if (!o.get) o.get = ['i[', ']']; // i = input object
 
   function rl(m, l) {
     if (l in om) return l; // l is operator
-    return o.convert[0] + '"'+l.replace(/"/g, '\\"')+'"' + o.convert[1];
+    return o.get[0] + '"'+l.replace(/"/g, '\\"')+'"' + o.get[1];
   }
 
   // space is and by default
