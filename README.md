@@ -8,6 +8,8 @@ for example: filter a search result by tags
 minified size: 687 bytes in [dist/logic_fn.min.esm.js](dist/logic_fn.min.esm.js)  
 4 times smaller than [logical-expression-parser](https://github.com/NimitzDEV/logical-expression-parser) with [2.3 kiloByte](https://bundlephobia.com/result?p=logical-expression-parser) minified bundle size
 
+inspired by [nwsapi](https://github.com/dperini/nwsapi/blob/37639c9db20f529029c219e2424118ca03917e0d/src/nwsapi.js#L768)
+
 warning: do not use in critical server code  
 otherwise you risk arbitrary code execution  
 (until now, no exploit was found)

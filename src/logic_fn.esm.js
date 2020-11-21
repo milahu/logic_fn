@@ -9,6 +9,9 @@
 // otherwise you risk arbitrary code execution
 // (until now, no exploit was found)
 
+// TODO benchmark vs https://github.com/NimitzDEV/logical-expression-parser
+// especially time calls to generated functions = hot code, called very often
+
 // TODO support nested input objects
 // var f = logic_fn('a.a'); f({ a: { a: 1 } })
 // for now, the literal a.a is always geted to "a.a"
@@ -18,6 +21,10 @@
 // including a default/fallback getter function
 
 // TODO support compare-operators: 0 < a, a < 10
+
+// TODO support kebab-case-literals
+// currently are parsed into kebab NOT case NOT literals --> syntax error
+// --> detect minus between two literals?
 
 // boolean options: space_is_and (default), space_is_or, return_expr
 // option get: how to convert literal to boolean result. samples:
