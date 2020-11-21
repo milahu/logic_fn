@@ -98,7 +98,7 @@ if the generated expression is empty
 the logic-function returns `undefined`
 
 this value/expression can be changed  
-with the `fallback` option
+with the `empty` option
 
 ```js
 var f = logic_fn('');
