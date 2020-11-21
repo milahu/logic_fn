@@ -5,6 +5,9 @@
 // 4 times smaller than https://github.com/NimitzDEV/logical-expression-parser
 // usage: see test.js
 
+// WARNING do not use in critical server code
+// otherwise you risk arbitrary code execution
+
 // TODO support nested input objects
 // var f = logic_fn('a.a'); f({ a: { a: 1 } })
 // for now, the literal a.a is always converted to i["a.a"]

@@ -8,6 +8,9 @@ for example: filter a search result by tags
 minified size: 567 bytes in [dist/logic_fn.min.js](dist/logic_fn.min.js)  
 4 times smaller than [logical-expression-parser](https://github.com/NimitzDEV/logical-expression-parser) with [2.3 kiloByte](https://bundlephobia.com/result?p=logical-expression-parser) minified bundle size
 
+warning: do not use in critical server code  
+otherwise you risk arbitrary code execution
+
 ## install
 
 in your node.js project
