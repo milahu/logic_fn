@@ -14,7 +14,7 @@
 // so the input must be { "a.a": 1 }
 
 // boolean options: space_is_and (default), space_is_or, return_expr
-function logic_fn(e, o) {
+export function logic_fn(e, o) {
 
   if (typeof o != 'object') o = {};
 
@@ -59,5 +59,3 @@ function logic_fn(e, o) {
   if (o.return_expr) return e;
   return new Function('i', `return ${e};`);
 };
-
-module.exports = logic_fn;

@@ -1,6 +1,4 @@
-var logic_fn = require('../');
-
-
+var { logic_fn } = require('../');
 
 function te(n, e, o, r) { // test expression
   var R = logic_fn(e, {...o, return_expr: 1});
