@@ -47,6 +47,15 @@ function logic_fn(e, o) {
   // replace operators first to consume whitespace
   e = e.trim().replace(fo, ro).replace(fl, rl);
 
+  // remove empty parenthesis
+  var l = e.length;
+  while (true) {
+    e = e.replace(/\(\)/g, '');
+    var L = e.length;
+    if (L == l) break;
+    l = L;
+  }
+
   if (o.return_expr) return e;
   return new Function('i', `return ${e};`);
 };
