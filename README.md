@@ -114,6 +114,11 @@ var i = { a: 1 };
 var r = f(i); // r === false
 ```
 
+## build
+
+the source code in [src/logic_fn.esm.js](src/logic_fn.esm.js) is in EcmaScript module format.
+if you change the source code, and need a different format (minified CommonJS / UniversalModule / EcmaScript), then you must run `npm run build` to generate the new files in [dist/](dist/)
+
 ## license
 
 CC0-1.0 = creative commons zero 1.0
