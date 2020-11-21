@@ -7,13 +7,26 @@
 
 // WARNING do not use in critical server code
 // otherwise you risk arbitrary code execution
+// (until now, no exploit was found)
 
 // TODO support nested input objects
 // var f = logic_fn('a.a'); f({ a: { a: 1 } })
 // for now, the literal a.a is always converted to i["a.a"]
 // so the input must be { "a.a": 1 }
 
+// TODO support other input types than object, like: array, set, map
+// currently, expression-literals are mapped to object-properties via i['literal']
+// sample: expression a&b, input object { a: 1, b: 0 }
+// alternative: i.hasOwnProperty('literal') to eval all values to true
+// goal: avoid conversion from existing data types
+
 // boolean options: space_is_and (default), space_is_or, return_expr
+// option convert: how to convert literal to boolean result. samples:
+//   ['i[', ']']                 // object -> boolean(value) (default)
+//   ['i.hasOwnProperty(', ')']  // object -> has key?
+//   ['i.has(', ')']             // set/map -> has value?
+//   ['i.includes(', ')']        // array/string -> has value/substring?
+//   the input variable is always 'i'
 export function logic_fn(e, o) {
 
   if (typeof o != 'object') o = {};
@@ -36,9 +49,12 @@ export function logic_fn(e, o) {
   function ro(m, o) { 
     return om[o];
   }
+
+  if (!o.convert) o.convert = ['i[', ']']; // i = input object
+
   function rl(m, l) {
     if (l in om) return l; // l is operator
-    return 'i["'+l.replace(/"/g, '\\"')+'"]'; // i = input object
+    return o.convert[0] + '"'+l.replace(/"/g, '\\"')+'"' + o.convert[1];
   }
 
   // space is and by default
