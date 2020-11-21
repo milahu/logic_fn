@@ -1,6 +1,6 @@
 {
   "name": "logic_fn",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "parse custom logic expression into javascript eval function",
   "source": "src/logic_fn.esm.js",
   "module": "dist/logic_fn.min.esm.js",

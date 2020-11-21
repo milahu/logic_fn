@@ -1,7 +1,7 @@
 // logic_fn.js
 // parse custom logic expression into javascript eval function
 
-// license: CC0-1.0, author: milahu, minified size: 660 bytes
+// license: CC0-1.0, author: milahu, minified size: 687 bytes
 // 4 times smaller than https://github.com/NimitzDEV/logical-expression-parser
 // usage: see test.js
 
@@ -27,6 +27,8 @@
 //   ['i.includes(', ')']           // array/string -> has value/substring?
 //   ['(l => i.includes(l))(', ')'] // custom type -> IIFE result
 //   the input variable is always 'i'
+// option empty: if generated expression is empty, return custom expression
+//   sample values: 'true', 'false'
 export function logic_fn(e, o) {
 
   if (typeof o != 'object') o = {};
@@ -71,6 +73,8 @@ export function logic_fn(e, o) {
     if (L == l) break;
     l = L;
   }
+
+  if (e == '' && o.empty) e = o.empty;
 
   if (o.return_expr) return e;
   return new Function('i', `return ${e};`);

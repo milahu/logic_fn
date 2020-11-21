@@ -5,7 +5,7 @@ parse custom logic expression into javascript eval function
 use case: test complex boolean expressions  
 for example: filter a search result by tags
 
-minified size: 660 bytes in [dist/logic_fn.min.esm.js](dist/logic_fn.min.esm.js)  
+minified size: 687 bytes in [dist/logic_fn.min.esm.js](dist/logic_fn.min.esm.js)  
 4 times smaller than [logical-expression-parser](https://github.com/NimitzDEV/logical-expression-parser) with [2.3 kiloByte](https://bundlephobia.com/result?p=logical-expression-parser) minified bundle size
 
 warning: do not use in critical server code  
@@ -88,6 +88,28 @@ var r = f(i); // r === true
 var f = logic_fn('a', { get: ['(l => i[l] == "yes")(', ')'] });
 var i = { a: 'yes' };
 var r = f(i); // r === true
+```
+
+## empty value
+
+if the generated expression is empty  
+the logic-function returns `undefined`
+
+this value/expression can be changed  
+with the `fallback` option
+
+```js
+var f = logic_fn('');
+var i = { a: 1 };
+var r = f(i); // r === undefined
+
+var f = logic_fn('', { empty: 'true' });
+var i = { a: 1 };
+var r = f(i); // r === true
+
+var f = logic_fn('', { empty: 'false' });
+var i = { a: 1 };
+var r = f(i); // r === false
 ```
 
 ## license
