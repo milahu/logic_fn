@@ -1,14 +1,14 @@
 var logic_fn = require('../');
 
 function te(n, e, o, r) { // test expression
-	var R = logic_fn(e, {...o, return_expr: 1});
-	if (r == R)
-		console.log('PASS '+n);
-	else {
-		console.log('FAIL '+n, {e, o});
-		console.log('     expected: '+r);
-		console.log('     actual:   '+R);
-	}
+  var R = logic_fn(e, {...o, return_expr: 1});
+  if (r == R)
+    console.log('PASS '+n);
+  else {
+    console.log('FAIL '+n, {e, o});
+    console.log('     expected: '+r);
+    console.log('     actual:   '+R);
+  }
 }
 
 te('whitespace literals', 'a b', {}, 'i["a b"]');
@@ -26,22 +26,22 @@ te('long operators 2', 'a  OR  (  NOT  b  AND  NOT  c  )', {}, 'i["a"]||(!i["b"]
 
 // test syntax error
 try {
-	logic_fn('a&(b|c) )');
+  logic_fn('a&(b|c) )');
 }
 catch (error) {
-	if (error.constructor.name == 'SyntaxError') {
-		console.log('PASS throw SyntaxError');
-	}
+  if (error.constructor.name == 'SyntaxError') {
+    console.log('PASS throw SyntaxError');
+  }
 }
 
 function tf(e, i, r) { // test function
-	var f = logic_fn(e);
-	if (Boolean(f(i)) == r) {
-		console.log('PASS ', e, i, r);
-	}
-	else {
-		console.log('FAIL ', e, i, r);
-	}
+  var f = logic_fn(e);
+  if (Boolean(f(i)) == r) {
+    console.log('PASS ', e, i, r);
+  }
+  else {
+    console.log('FAIL ', e, i, r);
+  }
 }
 
 tf('a&(b|c)', {a: 1, b: 1}, true);

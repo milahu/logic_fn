@@ -23,13 +23,13 @@ var f = logic_fn('a & (b | c)');
 
 // use logic function
 if (f({ a: 1, b: 1 })) {
-	console.log('expression "a & (b | c)" is true for a=1 and b=1');
+  console.log('expression "a & (b | c)" is true for a=1 and b=1');
 }
 
 // convert result to boolean
 var b = Boolean(f({ a: 1, b: 1 }));
 if (b === true) {
-	console.log('yes');
+  console.log('yes');
 }
 ```
 

@@ -13,38 +13,38 @@
 // boolean options: space_is_and (default), space_is_or, return_expr
 function logic_fn(e, o) {
 
-	if (typeof o != 'object') o = {};
+  if (typeof o != 'object') o = {};
 
-	const om = { // operator map from custom logic to javascript logic
-		// if you change operators
-		// you also must change the regular expressions fo and fl
-		'&': '&&', 'AND': '&&',
-		'|': '||', 'OR': '||',
-		'-': '!', '!': '!', 'NOT': '!',
-		'(': '(', ')': ')',
-	};
+  const om = { // operator map from custom logic to javascript logic
+    // if you change operators
+    // you also must change the regular expressions fo and fl
+    '&': '&&', 'AND': '&&',
+    '|': '||', 'OR': '||',
+    '-': '!', '!': '!', 'NOT': '!',
+    '(': '(', ')': ')',
+  };
 
-	// find operators and literals
-	var s = (o.space_is_and || o.space_is_or) ? ' ' : '';
-	var fo = new RegExp(' *(['+s+'&|()!-]|AND|OR|NOT) *', 'g');
-	var fl = new RegExp('([^'+s+'&|()!-]+)', 'g');
+  // find operators and literals
+  var s = (o.space_is_and || o.space_is_or) ? ' ' : '';
+  var fo = new RegExp(' *(['+s+'&|()!-]|AND|OR|NOT) *', 'g');
+  var fl = new RegExp('([^'+s+'&|()!-]+)', 'g');
 
-	// replace operators and literals
-	function ro(m, o) { 
-		return om[o];
-	}
-	function rl(m, l) {
-		if (l in om) return l; // l is operator
-		return 'i["'+l.replace(/"/g, '\\"')+'"]'; // i = input object
-	}
+  // replace operators and literals
+  function ro(m, o) { 
+    return om[o];
+  }
+  function rl(m, l) {
+    if (l in om) return l; // l is operator
+    return 'i["'+l.replace(/"/g, '\\"')+'"]'; // i = input object
+  }
 
-	// space is and by default
-	om[' '] = o.space_is_and ? '&&' : o.space_is_or ? '||' : '&&';
+  // space is and by default
+  om[' '] = o.space_is_and ? '&&' : o.space_is_or ? '||' : '&&';
 
-	// replace operators first to consume whitespace
-	e = e.trim().replace(fo, ro).replace(fl, rl);
+  // replace operators first to consume whitespace
+  e = e.trim().replace(fo, ro).replace(fl, rl);
 
-	if (o.return_expr) return e;
+  if (o.return_expr) return e;
   return new Function('i', `return ${e};`);
 };
 
