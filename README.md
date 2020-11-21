@@ -10,7 +10,7 @@ minified size: 567 bytes in [dist/logic_fn.min.js](dist/logic_fn.min.js)
 in your node.js project
 
 ```sh
-npm i -D https://github.com/milahu/logic_fn.git
+npm install https://github.com/milahu/logic_fn.git
 ```
 
 ## use
