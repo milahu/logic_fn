@@ -6,6 +6,8 @@ import { nodeResolve } from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import { terser } from 'rollup-plugin-terser';
 
+import { preval } from 'rollup-plugin-preval';
+
 const banner = `//! ${pkg.name}-${pkg.version}.js`;
 
 export default {
@@ -16,9 +18,20 @@ export default {
     { format: 'esm', file: pkg.module, banner }
   ],
   plugins: [
+    preval({ basedir: __dirname }), // directory of rollup.config.js
     nodeResolve(),
     babel({ exclude: 'node_modules/**', babelHelpers: 'bundled' }),
     commonjs(),
-    terser()
+    terser({
+      ecma: 2020,
+      compress: {
+        unsafe_arrows: true,
+        //unsafe: true,
+        passes: 4,
+      },
+      mangle: {
+        reserved: ['logic_fn'],
+      }
+    })
   ]
 };
